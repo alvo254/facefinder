@@ -1,0 +1,9 @@
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate.backup
+terraform.tfstate
+.terraform.tfstate.lock.info
+modules/lambda/func/lambda.zip
+modules/lambda/python/python.zip
+python/
+
