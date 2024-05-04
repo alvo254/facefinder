@@ -8,3 +8,7 @@ variable "project" {
 variable "env" {
   default = "dev"
 }
+
+variable "lambda_func_arn" {
+  type = string
+}

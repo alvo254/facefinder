@@ -87,21 +87,12 @@ resource "null_resource" "lambda_layer" {
 }
 
 
-resource "aws_cloudwatch_event_rule" "event_rule" {
-  name                = "s3-bucket-image-event-watch"
-  schedule_expression = "rate(60 seconds)"
-}
-
 resource "aws_lambda_permission" "lambda_permission" {
   statement_id  = "s3-bucket-image-event"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.lambda_function.arn
+  function_name = aws_lambda_function.lambda_function.function_name
   principal     = "events.amazonaws.com"
-  source_arn    = aws_cloudwatch_event_rule.event_rule.arn
+  source_arn    = var.event_rule
 }
 
-resource "aws_cloudwatch_event_target" "event_target" {
-  rule      = aws_cloudwatch_event_rule.event_rule.name
-  target_id = "1"
-  arn       = aws_lambda_function.lambda_function.arn
-}
+

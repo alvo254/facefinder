@@ -5,7 +5,7 @@ import logging
 
 # Setup logging
 logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 bucket_name = os.environ.get("FACE_FINDER_BUCKET_NAME")
 
 def lambda_handler(event, context):
@@ -84,3 +84,4 @@ def lambda_handler(event, context):
             'statusCode': 500,
             'body': json.dumps('An error occurred during processing.')
         }
+

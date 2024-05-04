@@ -32,3 +32,13 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
         ]
     })
 }
+
+resource "aws_s3_bucket_notification" "image-upload-rule" {
+  bucket = aws_s3_bucket.bucket.id
+  lambda_function {
+    lambda_function_arn = var.lambda_func_arn
+    events              = ["s3:ObjectCreated:*"]
+    filter_prefix       = ""
+    filter_suffix       = ".jpg"  # Adjust this to match your file extensions
+  }
+}

@@ -42,3 +42,4 @@ resource "aws_dynamodb_table" "face_images" {
   }
 }
 
+
