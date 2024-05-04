@@ -32,3 +32,17 @@ Utilize Amazon Rekognition to detect faces in uploaded images.
 Populate a DynamoDB table with information about detected faces.
 Trigger Amazon SNS to send email notifications if an image contains a face.
 
+## Challenge Steps
+
+Create Infrastructure with Terraform:
+We will leverage Terraform to provision the required AWS infrastructure components. This includes:
+
+- Utilizing Terraform modules to create:
+  - An S3 bucket module for storing images and triggering events.
+  - A Lambda function module for processing image uploads.
+  - A DynamoDB module for storing information about detected faces.
+  - VPC and Security Group modules for networking configurations.
+  - An EventBridge (formerly CloudWatch Events) module for event-driven architecture.
+
+By using Terraform and its modules, we can ensure consistent and repeatable infrastructure setup, making our deployment process efficient and manageable. Let's dive into each component and set up our serverless image recognition system with AWS!
+
