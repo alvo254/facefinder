@@ -1,0 +1,16 @@
+Resources:
+  MyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: func.lambda_handler
+      Runtime: python3.11
+      CodeUri: ./
+      Environment:
+        Variables:
+          FACE_FINDER_BUCKET_NAME: YOUR_BUCKET_NAME
+      Events:
+        MyEvent:
+          Type: S3
+          Properties:
+            Bucket: YOUR_BUCKET_NAME
+            Events: s3:ObjectCreated:*

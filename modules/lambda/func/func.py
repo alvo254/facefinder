@@ -5,13 +5,17 @@ import logging
 
 # Setup logging
 logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 bucket_name = os.environ.get("FACE_FINDER_BUCKET_NAME")
 
 def lambda_handler(event, context):
     try:
         # Initialize the Rekognition client
         rekognition = boto3.client('rekognition')
+        
+        # Call a simple Rekognition API method to verify access
+        collections = rekognition.list_collections()
+        logger.info("Successfully verified access to Amazon Rekognition. Available collections: %s", collections)
         
         # Initialize the DynamoDB client
         dynamodb = boto3.client('dynamodb')
@@ -63,14 +67,19 @@ def lambda_handler(event, context):
         
         # Store information about detected faces in DynamoDB
         if face_details:
-            dynamodb.put_item(
-                TableName='FaceImages',
-                Item={
-                    'BucketName': {'S': bucket_name},
-                    'ObjectKey': {'S': object_key},
-                    'FaceDetails': {'L': [{'M': face} for face in face_details]}
-                }
-            )
+            try:
+                dynamodb.put_item(
+                    TableName='FaceImages',
+                    Item={
+                        'BucketName': {'S': bucket_name},
+                        'ObjectKey': {'S': object_key},
+                        'FaceDetails': {'L': [{'M': face} for face in face_details]}
+                    }
+                )
+                logger.info("Face information stored in DynamoDB.")
+            except Exception as e:
+                logger.error("Failed to store face information in DynamoDB: %s", str(e))
+                raise e
         
         logger.info("Processing completed successfully.")
         
@@ -84,4 +93,6 @@ def lambda_handler(event, context):
             'statusCode': 500,
             'body': json.dumps('An error occurred during processing.')
         }
-
+    
+    lambda_handler()
+    
