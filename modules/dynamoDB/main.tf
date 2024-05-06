@@ -38,7 +38,7 @@ resource "aws_dynamodb_table" "face_images" {
 
 
   tags = {
-    Name        = "${var.project}-${var.env}-dynamoDB-table"
+    Name = "${var.project}-${var.env}-dynamoDB-table"
   }
 }
 

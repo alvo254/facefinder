@@ -18,9 +18,13 @@
       {
         "Effect": "Allow",
         "Action": [
-          "s3:GetObject"
+          "s3:GetObject",
+          "s3:ListBucket"
         ],
-        "Resource": "arn:aws:s3:::facefinder/*"
+        "Resource": [
+          "arn:aws:s3:::facefinder/*",
+          "arn:aws:s3:::facefinder"
+        ]
       },
       {
         "Effect": "Allow",
@@ -33,6 +37,11 @@
         "Effect": "Allow",
         "Action": "rekognition:*",
         "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": "s3:PutBucketNotificationConfiguration",
+        "Resource": "arn:aws:s3:::facefinder"
       }
     ]
   }

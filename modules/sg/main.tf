@@ -1,7 +1,7 @@
 resource "aws_security_group" "facefinder" {
   name        = "facefinder"
   description = "my security group"
-  vpc_id = var.vpc_id
+  vpc_id      = var.vpc_id
 
   ingress = [
     {
@@ -15,8 +15,8 @@ resource "aws_security_group" "facefinder" {
       self             = false
       ipv6_cidr_blocks = ["::/0"]
 
-  },
-      {
+    },
+    {
       description      = "HTTS"
       from_port        = 443
       to_port          = 443
@@ -27,19 +27,19 @@ resource "aws_security_group" "facefinder" {
       self             = false
       ipv6_cidr_blocks = ["::/0"]
 
-  },
-  {
-      description      = "SSH"
-      from_port        = 22
-      to_port          = 22
-      protocol         = "tcp"
+    },
+    {
+      description = "SSH"
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
       //The /32 means use a single ip
       cidr_blocks      = ["102.216.154.33/32"] //Please change to your own IP address for this to work
       ipv6_cidr_blocks = []
       prefix_list_ids  = []
       security_groups  = []
       self             = false
-  },
+    },
   ]
 
   egress = [
@@ -53,7 +53,7 @@ resource "aws_security_group" "facefinder" {
       prefix_list_ids  = []
       security_groups  = []
       self             = false
-  }
+    }
   ]
 
   tags = {

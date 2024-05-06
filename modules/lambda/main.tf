@@ -1,5 +1,5 @@
 resource "aws_iam_role" "lambda_role" {
-  name = "lambda-data-pull-s3-role"
+  name               = "lambda-data-pull-s3-role"
   assume_role_policy = file("${path.module}/lambda-role.json")
 }
 
@@ -41,8 +41,8 @@ resource "aws_lambda_function" "lambda_function" {
 }
 
 data "archive_file" "lambda" {
-  type       = "zip"
-  source_dir = "${path.module}/func/"
+  type        = "zip"
+  source_dir  = "${path.module}/func/"
   output_path = "${path.module}/func/lambda.zip"
 }
 
@@ -53,7 +53,7 @@ data "archive_file" "python" {
 }
 
 locals {
-  layer_zip_path = "${path.module}/python/python.zip"
+  layer_zip_path    = "${path.module}/python/python.zip"
   requirements_path = "${path.module}/python/requirements.txt"
   # requirements_path = "${path.root}/modules/lambda/python/requirements.txt"
   layer_name = "python-layer"
@@ -94,5 +94,25 @@ resource "aws_lambda_permission" "lambda_permission" {
   principal     = "events.amazonaws.com"
   source_arn    = var.event_rule
 }
+
+resource "aws_lambda_permission" "allow_bucket" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.lambda_function.arn
+  principal     = "s3.amazonaws.com"
+  source_arn    = var.bucket_arn
+}
+
+# resource "aws_s3_bucket_notification" "image_upload_rule" {
+#   bucket = var.bucket_name
+#   lambda_function {
+#     lambda_function_arn = aws_lambda_function.lambda_function.arn
+#     events              = ["s3:ObjectCreated:*"]
+#     # filter_prefix       = ""
+#     filter_suffix       = ".jpg"  # Adjust this to match your file extensions
+#   }
+#   depends_on = [ aws_lambda_permission.lambda_permission ]
+# }
+
 
 

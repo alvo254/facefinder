@@ -11,7 +11,7 @@
 #         bucketName = [var.bucket_name]
 #       }
 
-      
+
 #     }
 #   })
 # }
@@ -42,6 +42,6 @@ resource "aws_cloudwatch_event_target" "lambda_target" {
   rule      = aws_cloudwatch_event_rule.image_upload_rule.name
   target_id = "lambda_target"
   arn       = var.lambda_func_arn
-#   input     = "{\"bucketName\": \"your-s3-bucket-name\", \"objectKey\": \"\${detail.requestParameters.key}\"}"
+  #   input     = "{\"bucketName\": \"your-s3-bucket-name\", \"objectKey\": \"\${detail.requestParameters.key}\"}"
 }
 

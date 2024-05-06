@@ -12,9 +12,10 @@ variable "bucket_name" {
 
 variable "event_rule" {
   description = "This is the aws cloudwatch event rule  arn"
-  type = string
+  type        = string
 }
 
 variable "bucket_arn" {
   type = string
 }
+
